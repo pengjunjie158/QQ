@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+
+        function rem(value){
+    document.documentElement.style.fontSize = window.screen.width/value +'px';
+    window.onresize = function(){
+        document.documentElement.style.fontSize = window.screen.width/value +'px';
+    }
+}
+rem(window.screen.width/100)
+</script>
+</head>
+<body>
+<header class="header">
+    <span href="#" class="header-user">
+        <img src="images/l3.jpg">
+    </span>
+    <span class="title">
+        消息
+    </span>
+    <span class="link">
+        ＋
+    </span>
+</header>
+<section class="contain">
+    <div class="search">
+            <input type="text" placeholder='搜索'>
+            <i class='fa fa-fw fa-search'></i>
+    </div>
+
+    <div class="select">
+
+        <div class="opt" v-for="item in json">
+            <div class="opt-img">
+                <img :src=item.img>
+            </div>
+            <div class="opt-abstract">
+                <div class="opt_top">
+                    <h3>{{item.name}}</h3>
+                    <p><span>{{item.time1}}</span><span>{{item.time2}}</span></p>
+                </div>
+                <div class="opt_bottom">
+                    <p class='text-nobr'>
+                        <span class="sp">{{item.span}}</span>
+                        <span>{{item.nobr}}</span>
+                    </p>
+                    <label class="bg"></label>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<footer class="footer">
+    <ul>
+        <li>
+            <a href="#">
+                <i class='fa fa-fw fa-globe'></i>
+                <span>消息</span>
+                <label class="bg">5</label>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='fa fa-fw fa-user-o'></i>
+                <span>联系人</span>
+                <label class="bg">1</label>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='fa fa-fw fa-star-o'></i>
+                <span>动态</span>
+                <label class="bg">2</label>
+            </a>
+        </li>
+    </ul>
+</footer>
+
+</body>
+<script src="js/jquery.js"></script>
+<script src="js/vue2.js"></script>
+<script>
+    var vm=new Vue({
+        el:".select",
+        data:{
+             json:[
+               
+             ]
+        },
+        created() {
+
+            $.ajax({
+                url:"http://localhost:8099/shopping",
+                type:"POST",
+                data:"name=as&pwd=123"
+            }).then(function(result){
+                vm.json=result;
+            },function(err){
+                  console.log(err)
+            })
+         }
+
+    })
+
+</script>
+</html>
